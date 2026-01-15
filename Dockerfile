@@ -2,7 +2,7 @@ ARG BUILDER_IMAGE=index.docker.io/library/golang@sha256:634cda4edda00e59167e944c
 ARG RUNTIME_IMAGE=gcr.io/distroless/static@sha256:c9320b754c2fa2cd2dea50993195f104a24f4c7ebe6e0297c6ddb40ce3679e7d
 
 
-FROM $BUILDER_IMAGE as builder
+FROM $BUILDER_IMAGE as BUILDER
 
         WORKDIR /workspace
 
@@ -23,7 +23,7 @@ FROM $BUILDER_IMAGE as builder
 FROM $RUNTIME_IMAGE
 
         WORKDIR /
-        COPY --chown=nonroot:nonroot --from=builder /workspace/monero-exporter .
+        COPY --chown=nonroot:nonroot --from=BUILDER /workspace/monero-exporter .
         USER nonroot:nonroot
 
         ENTRYPOINT ["/monero-exporter"]
